@@ -36,6 +36,14 @@ class Produit
 
     #[ORM\Column(length: 255)]
     private ?string $alert_stock = null;
+   /**
+     * @ORM\ManyToOne(targetEntity="Categorie", inversedBy="produits")
+     * @ORM\JoinColumn(name="categorie_id", referencedColumnName="id")
+     */
+    private $categorie;
+
+    // ...
+
 
     public function getId(): ?int
     {
@@ -134,6 +142,18 @@ class Produit
     public function setAlertStock(string $alert_stock): self
     {
         $this->alert_stock = $alert_stock;
+
+        return $this;
+    }
+    
+    public function getCategorie(): ?Categorie
+    {
+        return $this->categorie;
+    }
+
+    public function setCategorie(Categorie $categorie): self
+    {
+        $this->categorie = $categorie;
 
         return $this;
     }
