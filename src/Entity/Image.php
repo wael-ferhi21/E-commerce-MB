@@ -12,6 +12,10 @@ class Image
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+    /**
+     * @ORM\OneToMany(targetEntity="Produit", mappedBy="image")
+     */
+    private $produits;
 
     #[ORM\Column]
     private ?int $img_id = null;

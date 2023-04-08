@@ -41,6 +41,20 @@ class Produit
      * @ORM\JoinColumn(name="categorie_id", referencedColumnName="id")
      */
     private $categorie;
+     /**
+     * @ORM\ManyToOne(targetEntity="Image", inversedBy="produits")
+     * @ORM\JoinColumn(name="img_id", referencedColumnName="id")
+     */
+    private $image;
+
+    #[ORM\Column(length: 255)]
+    private ?string $prod_name = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $updatedAt = null;
 
     // ...
 
@@ -154,6 +168,42 @@ class Produit
     public function setCategorie(Categorie $categorie): self
     {
         $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    public function getProdName(): ?string
+    {
+        return $this->prod_name;
+    }
+
+    public function setProdName(string $prod_name): self
+    {
+        $this->prod_name = $prod_name;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
