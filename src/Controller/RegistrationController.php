@@ -13,11 +13,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class RegistrationController extends AbstractController
 {
     #[Route('/inscription', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, UserauthentificationAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, UserauthentificationAuthenticator $authenticator, EntityManagerInterface $entityManager,ValidatorInterface $validator): Response
     {
         $user = new Client();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -34,6 +35,7 @@ class RegistrationController extends AbstractController
             
 
             $entityManager->persist($user);
+            //   Todo
             $entityManager->flush();
             // do anything else you need here, like send an email
 
@@ -43,9 +45,10 @@ class RegistrationController extends AbstractController
                 $request
             );
         }
-
+        $errors = $validator->validate($user);
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
+            'errors' => $errors,
         ]);
     }
 }

@@ -6,6 +6,8 @@ use App\Repository\UtilisateurRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: UtilisateurRepository::class)]
 /**
@@ -13,12 +15,14 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 abstract class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+   // #[Assert\NotBlank(message:'Adresse mail n est pas valide')]
     private ?string $email = null;
 
     #[ORM\Column]
