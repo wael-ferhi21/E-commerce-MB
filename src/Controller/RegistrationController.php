@@ -16,7 +16,11 @@ use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class RegistrationController extends AbstractController
-{
+{   private $entityManager; 
+    public function __construct(EntityManagerInterface $entityManager){
+        $this->entityManager= $entityManager;
+    }
+
     #[Route('/inscription', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, UserauthentificationAuthenticator $authenticator, EntityManagerInterface $entityManager,ValidatorInterface $validator): Response
     {
@@ -29,23 +33,18 @@ class RegistrationController extends AbstractController
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
-                    $form->get('plainPassword')->getData()
+                    $form->get('password')->getData()
                 )
             );
             
+        $user=$form->getData();
+       
 
-            $entityManager->persist($user);
-            //   Todo
-            $entityManager->flush();
-            // do anything else you need here, like send an email
-
-            return $userAuthenticator->authenticateUser(
-                $user,
-                $authenticator,
-                $request
-            );
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
         }
         $errors = $validator->validate($user);
+
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
             'errors' => $errors,

@@ -23,15 +23,7 @@ class Client extends Utilisateur
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $sexe = null;
-
-    #[ORM\Column(length: 255)]
-  
-
     
-    private ?string $num_tel = null;
-
-    #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message:'Le nom ne peut pas etre vide')]
     private ?string $nom = null;
 
@@ -41,33 +33,6 @@ class Client extends Utilisateur
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getSexe(): ?string
-    {
-        return $this->sexe;
-    }
-
-    public function setSexe(string $sexe): self
-    {
-        $this->sexe = $sexe;
-
-        return $this;
-    }
-
-   
-       
-
-    public function getNumTel(): ?string
-    {
-        return $this->num_tel;
-    }
-
-    public function setNumTel(string $num_tel): self
-    {
-        $this->num_tel = $num_tel;
-
-        return $this;
     }
 
     public function getNom(): ?string
