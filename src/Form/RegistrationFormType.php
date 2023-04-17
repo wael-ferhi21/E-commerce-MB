@@ -24,22 +24,31 @@ class RegistrationFormType extends AbstractType
             ->add('nom',TextType::class ,  [
             'label' => 'Votre Nom',
             'attr' => ['placeholder' => 'Nom'],
+            'constraints' => new Length([
+                "min"=>2,
+                "max"=>30]), 
             ])
             ->add('prenom',TextType::class ,  [
                 'label' => 'Votre Prénom',
                 'attr' => ['placeholder' => 'Prénom'],
+                'constraints' => new Length([
+                    "min"=>2,
+                    "max"=>30]), 
             ])
             ->add('email',EmailType::class, [
                 'label' => 'Votre E-mail',
                 'attr' => ['placeholder' => 'E-mail'],
+                'constraints' => new Length([
+                    "min"=>2,
+                    "max"=>60]), 
                 ])
                 ->add('password', RepeatedType::class, [
                 'type'=>PasswordType::class,
                 'invalid_message'=>'Le mot de passe et la confiramtion doivent etre identiques',
                 'label' => 'Votre Mot de passe',
                 'required'=>true,
-                'first_options'=>['label'=>'Votre mot de passe'],
-                'second_options'=>['label'=>'Confirmer votre mot de passe'],
+                'first_options'=>['label'=>'Votre mot de passe','attr' => ['placeholder' => 'Mot de passe'],],
+                'second_options'=>['label'=>'Confirmer votre mot de passe','attr' => ['placeholder' => 'Confirmer votre mot de passe'],],
                 'attr' => ['autocomplete' => 'Nouveau mot de passe','placeholder' => 'Mot de passe'],
                 'constraints' => [
                     new NotBlank([

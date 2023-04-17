@@ -5,14 +5,12 @@ namespace App\Controller;
 use App\Entity\Client;
 
 use App\Form\RegistrationFormType;
-use App\Security\UserauthentificationAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class RegistrationController extends AbstractController
@@ -22,7 +20,7 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/inscription', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, UserauthentificationAuthenticator $authenticator, EntityManagerInterface $entityManager,ValidatorInterface $validator): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher): Response
     {
         $user = new Client();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -43,11 +41,11 @@ class RegistrationController extends AbstractController
         $this->entityManager->persist($user);
         $this->entityManager->flush();
         }
-        $errors = $validator->validate($user);
+       
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
-            'errors' => $errors,
+            
         ]);
     }
 }
