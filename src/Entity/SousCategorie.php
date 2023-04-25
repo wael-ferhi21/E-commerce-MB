@@ -13,8 +13,6 @@ class SousCategorie
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $id_sc = null;
 
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
@@ -22,18 +20,6 @@ class SousCategorie
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getIdSc(): ?int
-    {
-        return $this->id_sc;
-    }
-
-    public function setIdSc(int $id_sc): self
-    {
-        $this->id_sc = $id_sc;
-
-        return $this;
     }
 
     public function getNom(): ?string

@@ -14,9 +14,6 @@ class Livraison
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $liv_id = null;
-
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $livdate = null;
 
@@ -46,17 +43,7 @@ class Livraison
         return $this->id;
     }
 
-    public function getLivId(): ?int
-    {
-        return $this->liv_id;
-    }
-
-    public function setLivId(int $liv_id): self
-    {
-        $this->liv_id = $liv_id;
-
-        return $this;
-    }
+   
 
     public function getLivdate(): ?\DateTimeInterface
     {

@@ -14,8 +14,7 @@ class Commande
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $comdid = null;
+   
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $comddate = null;
@@ -29,18 +28,6 @@ class Commande
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getComdid(): ?int
-    {
-        return $this->comdid;
-    }
-
-    public function setComdid(int $comdid): self
-    {
-        $this->comdid = $comdid;
-
-        return $this;
     }
 
     public function getComddate(): ?\DateTimeInterface

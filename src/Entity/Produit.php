@@ -14,12 +14,6 @@ class Produit
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?int $prod_id = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $prod_design = null;
-
-    #[ORM\Column]
     private ?float $prix = null;
 
     #[ORM\Column]
@@ -36,16 +30,7 @@ class Produit
 
     #[ORM\Column(length: 255)]
     private ?string $alert_stock = null;
-   /**
-     * @ORM\ManyToOne(targetEntity="Categorie", inversedBy="produits")
-     * @ORM\JoinColumn(name="categorie_id", referencedColumnName="id")
-     */
-    private $categorie;
-     /**
-     * @ORM\ManyToOne(targetEntity="Image", inversedBy="produits")
-     * @ORM\JoinColumn(name="img_id", referencedColumnName="id")
-     */
-    private $image;
+  
 
     #[ORM\Column(length: 255)]
     private ?string $prod_name = null;
@@ -56,6 +41,13 @@ class Produit
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
 
+
+    #[ORM\Column(length: 255)]
+    private ?string $image = null;
+
+    #[ORM\ManyToOne(inversedBy: 'produits')]
+    private ?Categorie $categorie = null;
+
     // ...
 
 
@@ -64,29 +56,6 @@ class Produit
         return $this->id;
     }
 
-    public function getProdId(): ?int
-    {
-        return $this->prod_id;
-    }
-
-    public function setProdId(int $prod_id): self
-    {
-        $this->prod_id = $prod_id;
-
-        return $this;
-    }
-
-    public function getProdDesign(): ?string
-    {
-        return $this->prod_design;
-    }
-
-    public function setProdDesign(string $prod_design): self
-    {
-        $this->prod_design = $prod_design;
-
-        return $this;
-    }
 
     public function getPrix(): ?float
     {
@@ -159,19 +128,7 @@ class Produit
 
         return $this;
     }
-    
-    public function getCategorie(): ?Categorie
-    {
-        return $this->categorie;
-    }
-
-    public function setCategorie(Categorie $categorie): self
-    {
-        $this->categorie = $categorie;
-
-        return $this;
-    }
-
+ 
     public function getProdName(): ?string
     {
         return $this->prod_name;
@@ -204,6 +161,30 @@ class Produit
     public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getCategorie(): ?Categorie
+    {
+        return $this->categorie;
+    }
+
+    public function setCategorie(?Categorie $categorie): self
+    {
+        $this->categorie = $categorie;
 
         return $this;
     }

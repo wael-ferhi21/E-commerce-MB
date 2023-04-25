@@ -15,15 +15,10 @@ class Categorie
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $catid = null;
+
 
     #[ORM\Column(length: 255)]
     private ?string $catlib = null;
-    /**
-     * @ORM\OneToMany(targetEntity="Produit", mappedBy="categorie")
-     */
-    private $produits;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
@@ -31,24 +26,24 @@ class Categorie
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
-    // ...
+    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Produit::class)]
+    private Collection $produits;
+
+    public function __construct()
+    {
+        $this->produits = new ArrayCollection();
+    }
+
+
+
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getCatid(): ?int
-    {
-        return $this->catid;
-    }
 
-    public function setCatid(int $catid): self
-    {
-        $this->catid = $catid;
-
-        return $this;
-    }
+  
 
     public function getCatlib(): ?string
     {
@@ -62,38 +57,6 @@ class Categorie
         return $this;
     }
     
-    /**
-     * @return Collection<int, Produit>
-     */
-    public function getProducts(): Collection
-    {
-        return $this->produits;
-    }
-    public function __construct()
-    {
-        $this->produits = new ArrayCollection();
-    }
-
-    public function addProduit(Produit $produit): self
-    {
-        if (!$this->produits->contains($produit)) {
-            $this->produits[] = $produit;
-            $produit->setCategorie($this);
-        }
-
-        return $this;
-    }
-
-    //public function removeProduct(Produit $produit): self
-   // {
-      //  if ($this->produits->removeElement($produit)) {
-            
-           // if ($produit->getCategorie() === $this) {
-               // $produit->setCategorie();
-           // }
-       // }
-       // return $this;
-   // }
 
     public function __toString()
     {
@@ -120,6 +83,36 @@ class Categorie
     public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Produit>
+     */
+    public function getProduits(): Collection
+    {
+        return $this->produits;
+    }
+
+    public function addProduit(Produit $produit): self
+    {
+        if (!$this->produits->contains($produit)) {
+            $this->produits->add($produit);
+            $produit->setCategorie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduit(Produit $produit): self
+    {
+        if ($this->produits->removeElement($produit)) {
+            // set the owning side to null (unless already changed)
+            if ($produit->getCategorie() === $this) {
+                $produit->setCategorie(null);
+            }
+        }
 
         return $this;
     }

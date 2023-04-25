@@ -14,8 +14,6 @@ class Facture
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $factid = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $datefact = null;
@@ -35,18 +33,6 @@ class Facture
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getFactid(): ?int
-    {
-        return $this->factid;
-    }
-
-    public function setFactid(int $factid): self
-    {
-        $this->factid = $factid;
-
-        return $this;
     }
 
     public function getDatefact(): ?\DateTimeInterface

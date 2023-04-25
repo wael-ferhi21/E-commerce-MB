@@ -21,8 +21,8 @@ class CategorieCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('catid'),
-            TextField::new('catlib'),
+            IdField::new('catid')->hideOnForm(),
+            TextField::new('catlib','Nom de la catégorie'),
             DateTimeField::new('updatedAt','Mis a jour le:'),
             DateTimeField::new('createdAt','Crée le :'),
             

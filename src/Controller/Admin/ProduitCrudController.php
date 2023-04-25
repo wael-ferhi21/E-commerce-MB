@@ -14,6 +14,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
@@ -46,19 +47,21 @@ class ProduitCrudController extends AbstractCrudController
         return [
             IdField::new('id')->hideOnForm(),
             TextField::new('prod_name','Nom ')->setRequired(false),
-            TextField::new('qtestock','Quantité Stock '),
-            TextField::new('tauxtva','TVA'),
-            TextField::new('tauxremise','Remise'),
-            TextField::new('prod_design','Design'),
+            NumberField::new('qtestock','Quantité Stock '),
+            NumberField::new('tauxtva','TVA'),
+            NumberField::new('tauxremise','Remise'),
+            TextField::new('alert_stock','Alert Stock'),
 
             TextEditorField::new('proddescr','Description'),
             MoneyField::new('prix')->setCurrency('TND'),
            DateTimeField::new('updatedAt','Mis a jour le:'),
            DateTimeField::new('createdAt','Crée le :'),
-           //ImageField::new('image')
-                // ->setBasePath('upload\image\produit')
-                // ->setUploadDir('public\upload\image\produit'),
-                // ->setSortable(false),
+           AssociationField::new('categorie'),
+           ImageField::new('image','Image')
+           ->setBasePath('upload\image\produit')
+           ->setUploadDir('public\upload\image\produit')
+           
+           ->setSortable(false),
         
 
         ];

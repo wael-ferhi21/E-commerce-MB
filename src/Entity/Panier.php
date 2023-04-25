@@ -14,9 +14,6 @@ class Panier
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?int $p_id = null;
-
-    #[ORM\Column]
     private ?float $prixtotal = null;
 
     #[ORM\Column]
@@ -25,18 +22,6 @@ class Panier
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getPId(): ?int
-    {
-        return $this->p_id;
-    }
-
-    public function setPId(int $p_id): self
-    {
-        $this->p_id = $p_id;
-
-        return $this;
     }
 
     public function getPrixtotal(): ?float
