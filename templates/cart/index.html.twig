@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Panier {% endblock %}
+
+{% block content %}
+<h1>Mon Panier </h1>
+Retrouvez l'ensemble des produits que vous avez ajouté a votre panier
+<hr>
+{% if cart|length > 0 %}
+    
+
+<table class="table mt-3">
+  <thead>
+    <tr>
+      <th scope="col">Produit</th>
+      <th scope="col"></th>
+      <th scope="col">Quantité</th>
+      <th scope="col">Prix</th>
+      <th scope="col">Total</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+  {% set total= null %}
+  {% for produit in cart %}
+    <tr>
+    <th>
+      <img src= "/upload/image/produit/{{produit.produit.image}}"alt="{{produit.produit.nom}}"height="75px" > <br/>
+
+      </th>
+      <td> {{produit.produit.nom}} <br/> 
+      </td>
+      <td>
+       <a href="{{path('app_cart_decrease',{'id': produit.produit.id})}}">
+       <img src="{{asset('assets/img/signe-moins-dune-ligne-en-position-horizontale.png')}}" height="10px" alt="Retirer un produit"> 
+       </a>
+         X {{produit.quantité}} 
+       <a href="{{path('app_cart_add_Produits',{'id': produit.produit.id})}}">
+       <img src="{{asset('assets/img/plus.png')}}" height="10px" alt="Ajouter un produit"> 
+       </a>
+       </td>
+      <td> {{(produit.produit.prix / 100)|number_format('2', ',', '.') }} TND </td>
+      <td>{{(produit.produit.prix * produit.quantité/ 100)|number_format('2', ',', '.') }} TND</td>
+      <td>
+       <a href="{{path('app_cart_delete', {'id': produit.produit.id})}}">
+       <img src="{{asset('assets/img/poubelle.png')}}" height="18px" alt="Supprimer mon produit"> 
+       </a>
+      </td>
+    </tr>
+    {% set total= total+(produit.produit.prix * produit.quantité)  %}
+
+    {% endfor %}
+  </tbody>
+</table>
+<div class="text-right mb-5">
+<b> Nombre de produits: </b> {{cart|length}} <br/>
+<b> Prix Total: </b> {{(total / 100)|number_format('2', ',', '.') }} TND 
+<a href="" class="btn btn-success btn-block mt-3"> Valider mon panier</a>
+</div>
+{% else %}
+<hr>
+<p><b>Votre panier est vide. </b></p>
+{% endif %}
+{% endblock %}

@@ -15,7 +15,8 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class RegistrationController extends AbstractController
 {   private $entityManager; 
-    public function __construct(EntityManagerInterface $entityManager){
+    public function __construct(EntityManagerInterface $entityManager)
+    {
         $this->entityManager= $entityManager;
     }
 

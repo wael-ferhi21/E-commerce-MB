@@ -1,3 +1,6 @@
+body {
+    position: relative;
+}
 .navbar-item-custom,.navbar-item-custom a {
     color: #fff;
 }
@@ -6,5 +9,39 @@
     position: absolute;
     bottom: 0;
     width: 100%;
+    margin-top: 50px;
 
+
+
+}
+
+.produit-item h5 {
+    text-transform: uppercase;
+    font-size: 15px;
+    margin-bottom: 1px;
+}
+.produit-item{
+    margin-top: 50px;
+}
+
+.produit-item .produit-proddescr{
+    font-size: 14px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.produit-item .produit-prix{
+    font-size: 15px;
+    font-weight: bold;
+}
+.produit-container{
+    margin-bottom: 150px;
+}
+.produit-page-prix{
+    font-weight: bold;
+    font-size: 20px;
+}
+.cart-icon{
+    height: 30px;
+    padding-left: 20px;
 }

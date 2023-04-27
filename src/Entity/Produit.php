@@ -32,9 +32,6 @@ class Produit
     private ?string $alert_stock = null;
   
 
-    #[ORM\Column(length: 255)]
-    private ?string $prod_name = null;
-
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
@@ -47,6 +44,12 @@ class Produit
 
     #[ORM\ManyToOne(inversedBy: 'produits')]
     private ?Categorie $categorie = null;
+
+    #[ORM\Column]
+    private ?bool $TopVente = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $nom = null;
 
     // ...
 
@@ -129,17 +132,7 @@ class Produit
         return $this;
     }
  
-    public function getProdName(): ?string
-    {
-        return $this->prod_name;
-    }
-
-    public function setProdName(string $prod_name): self
-    {
-        $this->prod_name = $prod_name;
-
-        return $this;
-    }
+  
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
@@ -185,6 +178,30 @@ class Produit
     public function setCategorie(?Categorie $categorie): self
     {
         $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    public function isTopVente(): ?bool
+    {
+        return $this->TopVente;
+    }
+
+    public function setTopVente(bool $TopVente): self
+    {
+        $this->TopVente = $TopVente;
+
+        return $this;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): self
+    {
+        $this->nom = $nom;
 
         return $this;
     }

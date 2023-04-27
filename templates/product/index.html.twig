@@ -1,20 +1,36 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ProductController!{% endblock %}
+{% block title %}Nos Produits {% endblock %}
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/PAULO KIRIGAYA/E-commerce-MB/src/Controller/ProductController.php'|file_link(0) }}">src/Controller/ProductController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/PAULO KIRIGAYA/E-commerce-MB/templates/product/index.html.twig'|file_link(0) }}">templates/product/index.html.twig</a></code></li>
-    </ul>
+{% block content %}
+<div class="row">
+<div class="col-md-3">
+    <h1> Filtrer</h1>
+    {{ form(form) }}
 </div>
+<div class="col-md-9">
+    <h1> Nos produits</h1>
+
+<div class="row produit-container">
+     {% for produit in produits %}
+     <div class="col-md-4">
+     <div class="produit-item text-center">
+        <a href="{{path('produit',{'nom' : produit.nom})}}"><img src="/upload/image/produit/{{produit.image}}" alt="{{produit.nom}}" class="img-fluid"></a>
+        <h5>{{produit.nom}} </h5>
+        <span class="produit-proddescr">{{produit.proddescr}} </span>
+        <span class="produit-prix"> {{(produit.prix / 100)|number_format('2', ',', '.') }} TND</span>
+   
+
+    </div>
+    </div>
+     {% endfor %}
+</div>
+</div>
+</div>
+
+
+
+
+
+
 {% endblock %}
