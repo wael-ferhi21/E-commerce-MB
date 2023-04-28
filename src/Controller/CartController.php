@@ -31,13 +31,13 @@ class CartController extends AbstractController
         return $this->redirectToRoute('app_cart');
     }
 
-    #[Route('/cart/remove/', name: 'app_cart_remove')]
-    public function remove(Cart $cart)
+    #[Route('/cart/remove/{id}', name: 'app_cart_remove')]
+    public function remove(Cart $cart,$id)
     {
-        $cart->remove(); 
+        $cart->remove($id);  
         return $this->redirectToRoute('produits');
     }
-    #[Route('/cart/delete/', name: 'app_cart_delete')]
+    #[Route('/cart/delete/{id}', name: 'app_cart_delete')]
     public function delete(Cart $cart,$id)
     {
         $cart->delete($id); 
@@ -45,7 +45,7 @@ class CartController extends AbstractController
     }
 
 
-    #[Route('/cart/decrease/', name: 'app_cart_decrease')]
+    #[Route('/cart/decrease/{id}', name: 'app_cart_decrease')]
     public function decrease(Cart $cart,$id)
     {
         $cart->decrease($id); 

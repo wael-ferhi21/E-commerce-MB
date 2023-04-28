@@ -3,26 +3,21 @@
 namespace App\Entity;
 
 use App\Repository\UtilisateurRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: UtilisateurRepository::class)]
-/**
- * @ORM\MappedSuperclass
- */
-abstract class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
+class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-   // #[Assert\NotBlank(message:'Adresse mail n est pas valide')]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -33,6 +28,20 @@ abstract class Utilisateur implements UserInterface, PasswordAuthenticatedUserIn
      */
     #[ORM\Column]
     private ?string $password = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $nom = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $prenom = null;
+
+    #[ORM\OneToMany(mappedBy: 'adresseclient', targetEntity: Adresse::class)]
+    private Collection $adresses;
+
+    public function __construct()
+    {
+        $this->adresses = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -102,5 +111,59 @@ abstract class Utilisateur implements UserInterface, PasswordAuthenticatedUserIn
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): self
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getPrenom(): ?string
+    {
+        return $this->prenom;
+    }
+
+    public function setPrenom(string $prenom): self
+    {
+        $this->prenom = $prenom;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Adresse>
+     */
+    public function getAdresses(): Collection
+    {
+        return $this->adresses;
+    }
+
+    public function addAdress(Adresse $adress): self
+    {
+        if (!$this->adresses->contains($adress)) {
+            $this->adresses->add($adress);
+            $adress->setAdresseclient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAdress(Adresse $adress): self
+    {
+        if ($this->adresses->removeElement($adress)) {
+            // set the owning side to null (unless already changed)
+            if ($adress->getAdresseclient() === $this) {
+                $adress->setAdresseclient(null);
+            }
+        }
+
+        return $this;
     }
 }

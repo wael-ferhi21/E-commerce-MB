@@ -17,7 +17,7 @@ class AccountPasswordController extends AbstractController
     public function __construct(EntityManagerInterface $entityManager){
         $this->entityManager= $entityManager;
     }
-    #[Route('/compte/modifier-mdp', name: 'app_account_password')]
+    #[Route('/compte/modifier-mdp', name: 'app_password')]
     public function index(Utilisateur $user , Request $request, UserPasswordHasherInterface $userPasswordHasher,UtilisateurRepository $userRepository,string $token)
     {  $user = $userRepository->findOneBy(['resetToken' => $token]);
 
