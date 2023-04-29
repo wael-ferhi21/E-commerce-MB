@@ -4,11 +4,11 @@
 
 {% block content %}
 <h1>Mon compte</h1>
-Bienvenue {{app.user.firstname}} dans votre compte <br/>
+Bienvenue {{app.user.nom}} dans votre compte <br/>
 <hr>
 <a href="{{path('app_password')}}"> -Modifier mon mot de passe </a><br/>
 <a href="{{path('app_adresse')}}"> -Gérer mes adresses <br/>
-<a href="{{path('account_password')}}"> -Mes commandes <br/>
+<a href="{{path('app_password')}}"> -Mes commandes <br/>
 </hr>
 
 

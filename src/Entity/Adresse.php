@@ -24,16 +24,10 @@ class Adresse
     private ?string $nomadr = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $société = null;
-
-    #[ORM\Column(length: 255)]
     private ?string $codepostal = null;
 
     #[ORM\Column(length: 255)]
     private ?string $adresse = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $cité = null;
 
     #[ORM\Column(length: 255)]
     private ?string $pays = null;
@@ -44,6 +38,12 @@ class Adresse
     #[ORM\ManyToOne(inversedBy: 'adresses')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Utilisateur $adresseclient = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $societe = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $cite = null;
 
 
     public function getId(): ?int
@@ -89,17 +89,6 @@ class Adresse
         return $this;
     }
 
-    public function getSociété(): ?string
-    {
-        return $this->société;
-    }
-
-    public function setSociété(string $société): self
-    {
-        $this->société = $société;
-
-        return $this;
-    }
 
     public function getCodepostal(): ?string
     {
@@ -125,17 +114,6 @@ class Adresse
         return $this;
     }
 
-    public function getCité(): ?string
-    {
-        return $this->cité;
-    }
-
-    public function setCité(string $cité): self
-    {
-        $this->cité = $cité;
-
-        return $this;
-    }
 
     public function getPays(): ?string
     {
@@ -169,6 +147,30 @@ class Adresse
     public function setAdresseclient(?Utilisateur $adresseclient): self
     {
         $this->adresseclient = $adresseclient;
+
+        return $this;
+    }
+
+    public function getSociete(): ?string
+    {
+        return $this->societe;
+    }
+
+    public function setSociete(string $societe): self
+    {
+        $this->societe = $societe;
+
+        return $this;
+    }
+
+    public function getCite(): ?string
+    {
+        return $this->cite;
+    }
+
+    public function setCite(string $cite): self
+    {
+        $this->cite = $cite;
 
         return $this;
     }

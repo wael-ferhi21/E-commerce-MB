@@ -9,7 +9,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+
 
 
 class ChangePasswordType extends AbstractType
@@ -20,14 +22,14 @@ class ChangePasswordType extends AbstractType
           
             ->add('old_password',PasswordType::class,[
                 'label'=>'Mon mot de passe actuel',
-                'mapped'=>'false',
+                'mapped'=>false,
                 'attr'=> [
                     'placeholder'=>'veuillez saisir votre mot de passe actuel',
                 ]
             ])
             ->add('new_password', RepeatedType::class, [
                 'type'=>PasswordType::class,
-                'mapped'=>'false',
+                'mapped'=>false,
                 'invalid_message'=>'Le mot de passe et la confiramtion doivent etre identiques',
                 'label' => 'Mon nouveau Mot de passe',
                 'required'=>true,
