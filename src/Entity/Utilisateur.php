@@ -38,9 +38,13 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'adresseclient', targetEntity: Adresse::class)]
     private Collection $adresses;
 
+    #[ORM\OneToMany(mappedBy: 'commandeclient', targetEntity: Commande::class)]
+    private Collection $commandes;
+
     public function __construct()
     {
         $this->adresses = new ArrayCollection();
+        $this->commandes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -76,18 +80,21 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
-
+        $roles[] = 'ROLE_ADMIN'; // ajoute le rôle ROLE_ADMIN
+    
         return array_unique($roles);
     }
-
+    
     public function setRoles(array $roles): self
-    {
-        $this->roles = $roles;
+{
+    $roles[] = 'ROLE_USER'; // assure que tous les utilisateurs ont ROLE_USER
+    $roles[] = 'ROLE_ADMIN'; // ajoute le rôle ROLE_ADMIN
 
-        return $this;
-    }
+    $this->roles = array_unique($roles);
+
+    return $this;
+}
 
     /**
      * @see PasswordAuthenticatedUserInterface
@@ -161,6 +168,36 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($adress->getAdresseclient() === $this) {
                 $adress->setAdresseclient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Commande>
+     */
+    public function getCommandes(): Collection
+    {
+        return $this->commandes;
+    }
+
+    public function addCommande(Commande $commande): self
+    {
+        if (!$this->commandes->contains($commande)) {
+            $this->commandes->add($commande);
+            $commande->setCommandeclient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommande(Commande $commande): self
+    {
+        if ($this->commandes->removeElement($commande)) {
+            // set the owning side to null (unless already changed)
+            if ($commande->getCommandeclient() === $this) {
+                $commande->setCommandeclient(null);
             }
         }
 

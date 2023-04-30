@@ -44,7 +44,9 @@ class Adresse
 
     #[ORM\Column(length: 255)]
     private ?string $cite = null;
-
+public function __toString(){
+    return $this->getNomadr().'[br]'.$this->getAdresse().'[br]'.$this->getCite().'-'.$this->getPays();
+}
 
     public function getId(): ?int
     {

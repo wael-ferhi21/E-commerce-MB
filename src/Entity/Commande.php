@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CommandeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -14,54 +16,121 @@ class Commande
     #[ORM\Column]
     private ?int $id = null;
 
-   
+    #[ORM\ManyToOne(inversedBy: 'commandes')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Utilisateur $commandeclient = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $comddate = null;
+    #[ORM\Column]
+    private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $comddescr = null;
+    private ?string $carrierNom = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $aadresse_client = null;
+    #[ORM\Column]
+    private ?float $carrierPrix = null;
+
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $adrlivraison = null;
+
+    #[ORM\OneToMany(mappedBy: 'commande', targetEntity: CommandeDetails::class)]
+    private Collection $commandeDetails;
+
+    public function __construct()
+    {
+        $this->commandeDetails = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getComddate(): ?\DateTimeInterface
+    public function getCommandeclient(): ?Utilisateur
     {
-        return $this->comddate;
+        return $this->commandeclient;
     }
 
-    public function setComddate(\DateTimeInterface $comddate): self
+    public function setCommandeclient(?Utilisateur $commandeclient): self
     {
-        $this->comddate = $comddate;
+        $this->commandeclient = $commandeclient;
 
         return $this;
     }
 
-    public function getComddescr(): ?string
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->comddescr;
+        return $this->createdAt;
     }
 
-    public function setComddescr(string $comddescr): self
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
-        $this->comddescr = $comddescr;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getAadresseClient(): ?string
+    public function getCarrierNom(): ?string
     {
-        return $this->aadresse_client;
+        return $this->carrierNom;
     }
 
-    public function setAadresseClient(string $aadresse_client): self
+    public function setCarrierNom(string $carrierNom): self
     {
-        $this->aadresse_client = $aadresse_client;
+        $this->carrierNom = $carrierNom;
+
+        return $this;
+    }
+
+    public function getCarrierPrix(): ?float
+    {
+        return $this->carrierPrix;
+    }
+
+    public function setCarrierPrix(float $carrierPrix): self
+    {
+        $this->carrierPrix = $carrierPrix;
+
+        return $this;
+    }
+
+    public function getAdrlivraison(): ?string
+    {
+        return $this->adrlivraison;
+    }
+
+    public function setAdrlivraison(string $adrlivraison): self
+    {
+        $this->adrlivraison = $adrlivraison;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CommandeDetails>
+     */
+    public function getCommandeDetails(): Collection
+    {
+        return $this->commandeDetails;
+    }
+
+    public function addCommandeDetail(CommandeDetails $commandeDetail): self
+    {
+        if (!$this->commandeDetails->contains($commandeDetail)) {
+            $this->commandeDetails->add($commandeDetail);
+            $commandeDetail->setCommande($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommandeDetail(CommandeDetails $commandeDetail): self
+    {
+        if ($this->commandeDetails->removeElement($commandeDetail)) {
+            // set the owning side to null (unless already changed)
+            if ($commandeDetail->getCommande() === $this) {
+                $commandeDetail->setCommande(null);
+            }
+        }
 
         return $this;
     }

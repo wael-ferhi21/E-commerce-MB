@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Carrier;
 use App\Entity\Categorie;
 use App\Entity\Produit;
 use App\Entity\Utilisateur;
@@ -12,6 +13,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class DashboardController extends AbstractDashboardController
 {
@@ -19,7 +21,8 @@ class DashboardController extends AbstractDashboardController
 
     }
     #[Route('/admin', name: 'admin')]
-    public function index(): Response
+    #[IsGranted('ROLE_ADMIN')]
+     public function index(): Response
     {
         $url=$this->adminUrlGenerator
         ->setController(ProduitCrudController::class)
@@ -50,6 +53,11 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Ajouter Catégorie','fas fa-plus',Categorie::class)->setAction(Crud::PAGE_NEW),
             MenuItem::linkToCrud('Consulter Catégorie','fas fa-eye',Categorie::class)
         ]);
+        yield MenuItem::subMenu('Carriers','fas fa-truck')->setSubItems([
+            MenuItem::linkToCrud('Ajouter Carrier','fas fa-plus',Carrier::class)->setAction(Crud::PAGE_NEW),
+            MenuItem::linkToCrud('Consulter Carrier','fas fa-eye',Carrier::class)
+        ]);
+        
         
     }
 }
