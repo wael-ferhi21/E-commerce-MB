@@ -5,10 +5,9 @@ namespace App\Controller;
 use App\Classe\Cart;
 use App\Entity\Commande;
 use App\Entity\CommandeDetails;
-
+use Doctrine\ORM\EntityManagerInterface;
 use App\Form\CommandeType;
 use DateTimeImmutable;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,7 +23,9 @@ class CommandeController extends AbstractController
     }
     #[Route('/commande', name: 'app_commande')]
     public function index(Cart $cart,Request $request): Response
+
     {
+        
         if(!$this->getUser()->getAdresses()->getValues())
         {
             return $this->redirectToRoute('app_add_adresse');
@@ -41,10 +42,12 @@ class CommandeController extends AbstractController
             'cart'=>$cart->getFull()
         ]);
     }
-    
-    #[Route('/commande/recapitulatif', name: 'app_commande_recap')]
+
+    #[Route('/commande/recapitulatif', name: 'app_commande_recap' , methods: "POST" )]
     public function add(Cart $cart,Request $request)
-    { 
+
+    {  
+
 
         $form=$this->createForm(CommandeType::class, null,[
             'user'=> $this->getUser()
@@ -52,8 +55,10 @@ class CommandeController extends AbstractController
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+     
 
+        if ($form->isSubmitted() && $form->isValid()) {
+            
             $date= new DateTimeImmutable();
             $carriers=$form->get('carriers')->getData();
             $adrlivraison=$form->get('adresses')->getData();
@@ -90,18 +95,19 @@ class CommandeController extends AbstractController
             $this->entityManager->persist($commande_details);
           }
           $this->entityManager->flush();
-        }
 
-
-        return $this->render('commande/add.html.twig',[
+          return $this->render('commande/add.html.twig',[
             
             'cart'=>$cart->getFull(),
-            'carrier'=>$carriers
-            
+            'carrier'=>$carriers,
+            'adrlivraison' => $adrlivraison_content
             
         ]);
+        
     }
-    
+
+    return $this->redirectToRoute('app_cart');
      
     }
 
+}

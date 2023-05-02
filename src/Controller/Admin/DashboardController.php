@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Carrier;
 use App\Entity\Categorie;
+use App\Entity\Commande;
 use App\Entity\Produit;
 use App\Entity\Utilisateur;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -25,7 +26,7 @@ class DashboardController extends AbstractDashboardController
      public function index(): Response
     {
         $url=$this->adminUrlGenerator
-        ->setController(ProduitCrudController::class)
+        ->setController(CommandeCrudController::class)
         ->generateUrl();
         return $this->redirect($url);
 
@@ -44,7 +45,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::section('E-commerce');
         yield MenuItem::linkToDashboard('Dashboard','fa fa-home');
         yield MenuItem::linkToCrud('Utilisateurs','fa fa-user',Utilisateur::class);
-    
+        yield MenuItem::linkToCrud('Commandes','fa fa-cart-shopping',Commande::class);
         yield MenuItem::subMenu('Produit','fas fa-tag')->setSubItems([
             MenuItem::linkToCrud('Ajouter Produit','fas fa-plus',Produit::class)->setAction(Crud::PAGE_NEW),
             MenuItem::linkToCrud('Consulter Produit','fas fa-eye',Produit::class)

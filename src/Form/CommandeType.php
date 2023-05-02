@@ -17,7 +17,7 @@ class CommandeType extends AbstractType
         $user=$options['user'];
         $builder
             ->add('adresses',EntityType::class,[
-              'label'=> 'Choisir votre adresse de livrraison',
+              'label'=> false,
               'required'=>true,
               'class'=>Adresse::class,
               'choices'=>$user->getAdresses(),
@@ -34,7 +34,7 @@ class CommandeType extends AbstractType
 
             ])
             ->add('submit',SubmitType::class ,  [
-              'label' => 'Payer',
+              'label' => 'Valider ma commande ',
               'attr'=> [
                 'class'=> 'btn btn-success btn-block',
               ]

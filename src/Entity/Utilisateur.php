@@ -120,6 +120,10 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
+    public function getFullName(){
+        
+        return $this->getNom().' '.$this->getPrenom();
+    }
     public function getNom(): ?string
     {
         return $this->nom;

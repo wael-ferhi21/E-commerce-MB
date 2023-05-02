@@ -42,7 +42,13 @@ class Commande
     {
         $this->commandeDetails = new ArrayCollection();
     }
-
+    public function getTotal(){
+        $total= null ; 
+        foreach ($this->getCommandeDetails()->getValues() as $produit ) {
+         $total=$total + ($produit->getPrix() * $produit->getQuantite());
+        }
+        return $total;
+    }
     public function getId(): ?int
     {
         return $this->id;
