@@ -40,7 +40,7 @@ Retrouvez l'ensemble des produits que vous avez ajouté a votre panier
        </a>
        </td>
       <td> {{(produit.produit.prix / 100)|number_format('2', ',', '.') }} TND </td>
-      <td>{{(produit.produit.prix * produit.quantité/ 100)|number_format('2', ',', '.') }} TND</td>
+      <td>{{((produit.produit.prix * produit.quantité)/ 100)|number_format('2', ',', '.') }} TND</td>
       <td>
        <a href="{{path('app_cart_delete', {'id': produit.produit.id})}}">
        <img src="{{asset('assets/img/poubelle.png')}}" height="18px" alt="Supprimer mon produit"> 
