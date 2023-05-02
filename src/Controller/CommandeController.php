@@ -79,7 +79,7 @@ class CommandeController extends AbstractController
           $commande->setCreatedAt($date);
           $commande->setCarrierPrix($carriers->getPrix());
           $commande->setAdrlivraison($adrlivraison_content);
-          $commande->setIsPaid(0);
+          $commande->setState(0);
 
           $this->entityManager->persist($commande);
          // Enregistrer mes produits CommandeDetails()
