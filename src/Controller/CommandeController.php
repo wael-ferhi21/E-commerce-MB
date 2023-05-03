@@ -74,6 +74,8 @@ class CommandeController extends AbstractController
        
           // Enregistrer ma commande Commande()
           $commande= new Commande();
+          $reference= $date->format('dmY').'-'.uniqid();
+          $commande->setReference($reference);
           $commande->setCommandeclient($this->getUser());
           $commande->setCarrierNom($carriers->getNom());
           $commande->setCreatedAt($date);
@@ -83,9 +85,9 @@ class CommandeController extends AbstractController
 
           $this->entityManager->persist($commande);
          // Enregistrer mes produits CommandeDetails()
+      
 
           foreach($cart->getFull() as $produit){
-
             $commande_details=new CommandeDetails();
             $commande_details-> setCommande($commande);
             $commande_details-> setProduit($produit['produit']->getNom());
@@ -94,13 +96,17 @@ class CommandeController extends AbstractController
             $commande_details-> setTotal($produit['produit']->getPrix()*$produit['quantité']);
             $this->entityManager->persist($commande_details);
           }
+     
           $this->entityManager->flush();
+
 
           return $this->render('commande/add.html.twig',[
             
             'cart'=>$cart->getFull(),
             'carrier'=>$carriers,
-            'adrlivraison' => $adrlivraison_content
+            'adrlivraison' => $adrlivraison_content,
+            'reference' => $commande->getReference()
+          
             
         ]);
         

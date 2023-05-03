@@ -39,6 +39,9 @@ class Commande
     #[ORM\Column]
     private ?int $state = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $reference = null;
+
     public function __construct()
     {
         $this->commandeDetails = new ArrayCollection();
@@ -154,6 +157,18 @@ class Commande
     public function setState(int $state): self
     {
         $this->state = $state;
+
+        return $this;
+    }
+
+    public function getReference(): ?string
+    {
+        return $this->reference;
+    }
+
+    public function setReference(string $reference): self
+    {
+        $this->reference = $reference;
 
         return $this;
     }
