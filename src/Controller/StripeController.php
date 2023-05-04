@@ -9,15 +9,21 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\ORM\EntityManagerInterface;
+
+
 
 class StripeController extends AbstractController
 {
-    #[Route('/commande/create-session', name: 'app_stripe_create_session')]
-    public function index(Cart $cart)
+    #[Route('/commande/create-session/{reference}', name: 'app_stripe_create_session')]
+
+    public function index(EntityManagerInterface $entityManager,  Cart $cart, $reference)
+
     {
         $produits_for_stripe=[]; 
         $YOUR_DOMAIN = 'http://localhost:127.0.0.1:8000';
-
+        
+        $commande = $entityManager->getRepository(Commande::class);
         foreach($cart->getFull() as $produit){
             $produits_for_stripe[]=[
                 'price_data' => [
@@ -37,8 +43,11 @@ class StripeController extends AbstractController
          
              
         $checkout_session = Session::create([
+           'customer_email' =>$this->getUser()->getEmail(),
            'payment_method_types' => ['card'],
-           'line_items' => $produits_for_stripe,
+           'line_items' =>[
+            $produits_for_stripe
+           ],
            'mode' => 'payment',
            'success_url' => $YOUR_DOMAIN . '/success.html',
            'cancel_url' => $YOUR_DOMAIN . '/cancel.html',
