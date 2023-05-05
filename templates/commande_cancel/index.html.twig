@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Erreur de paiement{% endblock %}
+
+{% block content %}
+<h2> Erreur de paiment </h2>
+<p>
+Bonjour <strong> {{ commande.user.nom }} {{ commande.user.prenom }}</strong>, <br/> <br/>
+Il semblerait que votre paiement pour votre commande n°<strong>{{ commande.reference }}</strong>.<br/>
+Une confirmation d'erreur vient de vous etre envoyée par email à l'adresse <strong>{{ commande.user.email}}.</strong> 
+<hr>
+</p>
+ <a href="{{ path('app_commande')}}" class="btn btn-success"> Réssayer le paiement </a>.
+
+{% endblock %}

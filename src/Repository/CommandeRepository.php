@@ -38,6 +38,21 @@ class CommandeRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    
+//    /**
+//     * findSuccesCommande(){ 
+//     * Permet d'afficher les commandes dans l'espace membre de l'utilisateur
+//     */
+    public function findSuccesCommande($user){
+
+      return $this->createQueryBuilder('o')
+      ->andWhere('o.state > 0')
+      ->andWhere('o.commandeclient = :user')
+      ->setParameter('user', $user)
+      ->orderBy('o.id', 'DESC')
+      ->getQuery()
+      ->getResult();
+    }
 
 //    /**
 //     * @return Commande[] Returns an array of Commande objects

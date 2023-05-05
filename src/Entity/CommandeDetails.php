@@ -28,7 +28,9 @@ class CommandeDetails
 
     #[ORM\Column]
     private ?float $total = null;
-
+    public function __toString(){
+        return $this->getProduit().' x '.$this->getQuantite();
+    }
     public function getId(): ?int
     {
         return $this->id;

@@ -17,9 +17,10 @@
 <hr>
 <strong>Mon transporteur </strong> <br/>
 <div class="form-check mt-4">
-{{ carrier.nom }} <br/>
+Nom transporteur :  {{ carrier.nom }} <br/>
 {{ carrier.description }} <br/>
-{{ carrier.prix|number_format('2', ',', '.') }} TND<br/>
+Prix de livraison : {{ carrier.prix|number_format('2', ',', '.') }} TND<br/>
+Numero de téléphone : {{ carrier.phone}}<br/>
 </div>
 
 <hr>
@@ -80,7 +81,11 @@
       return response.json();
      })
       .then(function(session){
-      return stripe.redirectToCheckout({ sessionId: session.id });
+        if(session.error== 'commande'){
+         window.location.replace('{{ path('app_commande') }}');
+        }else{
+          return stripe.redirectToCheckout({ sessionId: session.id });
+        }
      })
       .then(function(result){
         if (result.error){

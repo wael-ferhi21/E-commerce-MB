@@ -23,9 +23,12 @@ class Carrier
     #[ORM\Column]
     private ?float $prix = null;
 
+    #[ORM\Column]
+    private ?int $phone = null;
+
 
     public function __toString(){
-        return $this->getNom().'[br]'.$this->getDescription().'[br]'.number_format($this->getPrix(),2,',',',').'TND';
+        return $this->getNom().'[br]'.$this->getDescription().'[br]'.number_format(($this->getPrix() / 100),2,',',',').' TND'.'[br]'.$this->getphone().'[br]';
     }
     public function getId(): ?int
     {
@@ -64,6 +67,18 @@ class Carrier
     public function setPrix(float $prix): self
     {
         $this->prix = $prix;
+
+        return $this;
+    }
+
+    public function getPhone(): ?int
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(int $phone): self
+    {
+        $this->phone = $phone;
 
         return $this;
     }
