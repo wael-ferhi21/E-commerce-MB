@@ -46,12 +46,10 @@ class Produit
     private ?Categorie $categorie = null;
 
     #[ORM\Column]
-    private ?bool $TopVente = null;
+    private ?bool $topVente = null;
 
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
-
-    // ...
 
 
     public function getId(): ?int
@@ -184,12 +182,12 @@ class Produit
 
     public function isTopVente(): ?bool
     {
-        return $this->TopVente;
+        return $this->topVente;
     }
 
-    public function setTopVente(bool $TopVente): self
+    public function setTopVente(bool $topVente): self
     {
-        $this->TopVente = $TopVente;
+        $this->topVente = $topVente;
 
         return $this;
     }
@@ -205,4 +203,6 @@ class Produit
 
         return $this;
     }
+
+  
 }

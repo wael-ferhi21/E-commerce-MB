@@ -82,6 +82,7 @@ class CommandeCrudController extends AbstractCrudController
         IdField::new('id')->hideOnForm(),      
         DateTimeField::new('createdAt', 'Passé le'),
         TextField::new('commandeclient.getFullName', 'Utilisateur'),
+        TextEditorField::new('adrlivraison','Adresse de livraison')->onlyOnDetail(),        
         MoneyField::new('total')->setCurrency('TND'),
         TextField::new('carrierNom', 'Transporteur'),
         MoneyField::new('carrierPrix','frais de port')->setCurrency('TND'),

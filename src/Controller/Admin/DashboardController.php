@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Carrier;
 use App\Entity\Categorie;
 use App\Entity\Commande;
+use App\Entity\Header;
 use App\Entity\Produit;
 use App\Entity\Utilisateur;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -58,7 +59,10 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Ajouter Carrier','fas fa-plus',Carrier::class)->setAction(Crud::PAGE_NEW),
             MenuItem::linkToCrud('Consulter Carrier','fas fa-eye',Carrier::class)
         ]);
-        
+        yield MenuItem::subMenu('Headers','fas fa-desktop')->setSubItems([
+            MenuItem::linkToCrud('Ajouter Affiche','fas fa-plus',Header::class)->setAction(Crud::PAGE_NEW),
+            MenuItem::linkToCrud('Consulter Affiche','fas fa-eye',Header::class)
+        ]);
         
     }
 }

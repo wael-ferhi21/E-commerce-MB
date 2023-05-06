@@ -29,8 +29,11 @@ C'est dans cet espace que vous allez pouvoir gérer toutes vos commandes.<br/>
       <td><span class="badge badge-secondary">{{ commande.reference }}</span></td>
       <td>
       {% if commande.state == 1 %}
-      
-        
+         Paiement acceptée
+      {% elseif commande.state == 2 %}
+         Préparations en cours 
+      {% elseif commande.state == 3 %}
+         Livraison en cours
       {% endif %}
       </td>
       <td>{{ commande.commandeDetails|length }} </td>

@@ -61,15 +61,16 @@ class CommandeController extends AbstractController
             
             $date= new DateTimeImmutable();
             $carriers=$form->get('carriers')->getData();
+
             $adrlivraison=$form->get('adresses')->getData();
-            $adrlivraison_content=$adrlivraison->getNom().''.$adrlivraison->getPrenom();
+            $adrlivraison_content=$adrlivraison->getNom().' '.$adrlivraison->getPrenom();
             $adrlivraison_content.= '<br/>'.$adrlivraison->getNumtel();
 
             if($adrlivraison->getSociete()){
                 $adrlivraison_content.= '<br/>'.$adrlivraison->getSociete();
              }
              $adrlivraison_content.= '<br/>'.$adrlivraison->getAdresse();
-             $adrlivraison_content.= '<br/>'.$adrlivraison->getCodepostal().''.$adrlivraison->getCite();
+             $adrlivraison_content.= '<br/>'.$adrlivraison->getCodepostal().' '.$adrlivraison->getCite();
              $adrlivraison_content.= '<br/>'.$adrlivraison->getPays();
        
           // Enregistrer ma commande Commande()

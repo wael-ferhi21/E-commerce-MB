@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Classe\Mail;
 use App\Entity\Utilisateur;
 use App\Form\RegistrationFormType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -29,24 +30,38 @@ class RegistrationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
+            
+            
+        $user=$form->getData();
+        $search_email=$this->entityManager->getRepository(Utilisateur::class)->findOneByEmail($user->getEmail());
+        if (!$search_email){
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
                     $form->get('password')->getData()
                 )
             );
-            
-        $user=$form->getData();
+            $this->entityManager->persist($user);
+        $this->entityManager->flush();
+        $email= new Mail();
+        $content='...';
+        $email->send($user->getEmail(),$user->getNom(),'Bienvenue',$content);
+        $notification='Votre inscription est correcetement déroulé ';
+      
+
+        }else{
+            $notification='email existe déja  ';
+        }
        
 
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
+        
         
         }
        
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
+            'notification'=>$notification
             
         ]);
     }

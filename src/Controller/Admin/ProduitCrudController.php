@@ -57,10 +57,12 @@ class ProduitCrudController extends AbstractCrudController
             MoneyField::new('prix')->setCurrency('TND'),
            DateTimeField::new('updatedAt','Mis a jour le:'),
            DateTimeField::new('createdAt','Crée le :'),
-           BooleanField::new('TopVente','Plus vendu'),
+           BooleanField::new('topVente','Plus vendu'),
            AssociationField::new('categorie'),
            ImageField::new('image','Image')
+           
            ->setBasePath('upload\image\produit')
+           ->setFormTypeOptions(['mapped' => false , 'required' => false])
            ->setUploadDir('public\upload\image\produit')
            
            ->setSortable(false),
