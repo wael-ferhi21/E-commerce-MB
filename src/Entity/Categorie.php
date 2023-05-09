@@ -32,9 +32,13 @@ class Categorie
     #[ORM\Column(length: 255)]
     private ?string $image = null;
 
+    #[ORM\OneToMany(mappedBy: 'cat', targetEntity: SousCategorie::class)]
+    private Collection $sousCategories;
+
     public function __construct()
     {
         $this->produits = new ArrayCollection();
+        $this->sousCategories = new ArrayCollection();
     }
 
 
@@ -131,5 +135,38 @@ class Categorie
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, SousCategorie>
+     */
+    public function getSousCategories(): Collection
+    {
+        return $this->sousCategories;
+    }
+
+    public function addSousCategory(SousCategorie $sousCategory): self
+    {
+        if (!$this->sousCategories->contains($sousCategory)) {
+            $this->sousCategories->add($sousCategory);
+            $sousCategory->setCat($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSousCategory(SousCategorie $sousCategory): self
+    {
+        if ($this->sousCategories->removeElement($sousCategory)) {
+            // set the owning side to null (unless already changed)
+            if ($sousCategory->getCat() === $this) {
+                $sousCategory->setCat(null);
+            }
+        }
+
+        return $this;
+    }
+
+
+
 
 }

@@ -24,6 +24,7 @@ class RegistrationController extends AbstractController
     #[Route('/inscription', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher): Response
     {
+        $notification= null;
         $user = new  Utilisateur();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
@@ -35,6 +36,7 @@ class RegistrationController extends AbstractController
         $user=$form->getData();
         $search_email=$this->entityManager->getRepository(Utilisateur::class)->findOneByEmail($user->getEmail());
         if (!$search_email){
+
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
@@ -42,19 +44,16 @@ class RegistrationController extends AbstractController
                 )
             );
             $this->entityManager->persist($user);
-        $this->entityManager->flush();
+            $this->entityManager->flush();
         $email= new Mail();
-        $content='...';
+        $content='Bienvenue'.$user->getNom();
         $email->send($user->getEmail(),$user->getNom(),'Bienvenue',$content);
-        $notification='Votre inscription est correcetement déroulé ';
+        $notification='Votre inscription est correcetement déroulé. Vous pouvez dès à présent vous connecter à votre compte.';
       
 
         }else{
-            $notification='email existe déja  ';
+            $notification='email existe déja.';
         }
-       
-
-        
         
         }
        

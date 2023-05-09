@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AccountPasswordController extends AbstractController
@@ -18,9 +19,10 @@ class AccountPasswordController extends AbstractController
     public function index( Request $request, UserPasswordHasherInterface $userPasswordHasher)
     {
         $notification=null;
-        $user = $this->getUser();
-       
-        $form=$this->createForm(ChangePasswordType::class,$user);
+
+         /** @var PasswordAuthenticatedUserInterface $user */
+         $user = $this->getUser();
+         $form=$this->createForm(ChangePasswordType::class,$user);
 
         $form->handleRequest($request);
         

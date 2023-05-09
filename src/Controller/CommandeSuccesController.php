@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Classe\Cart;
+use App\Classe\Mail;
 use App\Entity\Commande;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,6 +31,10 @@ class CommandeSuccesController extends AbstractController
             $commande->setState(1);
             $this->entityManager->flush();
             //envoyer un email à notre client pour lui confirmer sa commande 
+            $email= new Mail();
+            $content='Merci pour votre commande'.$commande->getUser()->getNom();
+            $email->send($commande->getUser()->getEmail(),$commande->getUser()->getNom(),'Votre commande ClearShop est bien validée',$content);
+          
         }
 
 

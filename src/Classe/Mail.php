@@ -2,7 +2,7 @@
 
 namespace App\Classe ;
 use Mailjet\Client;
-use Mailjet\Ressources;
+use Mailjet\Resources;
 
 Class Mail{
 
@@ -35,7 +35,6 @@ Class Mail{
             ]
         ];
         $response = $mj->post(Resources::$Email, ['body' => $body]);
-        $response->success() && var_dump($response->getData());
-        
+        $response->success() ;
     }
 }

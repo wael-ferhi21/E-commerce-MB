@@ -7,6 +7,7 @@ use App\Entity\Categorie;
 use App\Entity\Commande;
 use App\Entity\Header;
 use App\Entity\Produit;
+use App\Entity\SousCategorie;
 use App\Entity\Utilisateur;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -54,6 +55,10 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::subMenu('Catégories','fas fa-list')->setSubItems([
             MenuItem::linkToCrud('Ajouter Catégorie','fas fa-plus',Categorie::class)->setAction(Crud::PAGE_NEW),
             MenuItem::linkToCrud('Consulter Catégorie','fas fa-eye',Categorie::class)
+        ]);
+        yield MenuItem::subMenu('Sous-Catégories','fas fa-list')->setSubItems([
+            MenuItem::linkToCrud('Ajouter Sous-Catégorie','fas fa-plus',SousCategorie::class)->setAction(Crud::PAGE_NEW),
+            MenuItem::linkToCrud('Consulter Sous-Catégorie','fas fa-eye',SousCategorie::class)
         ]);
         yield MenuItem::subMenu('Carriers','fas fa-truck')->setSubItems([
             MenuItem::linkToCrud('Ajouter Carrier','fas fa-plus',Carrier::class)->setAction(Crud::PAGE_NEW),

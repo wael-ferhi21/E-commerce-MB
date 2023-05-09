@@ -12,8 +12,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 
-
-
 class SearchType extends AbstractType{
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -33,6 +31,7 @@ class SearchType extends AbstractType{
             'class' => Categorie::class,
             'multiple' => true,
             'expanded' => true
+
          ])
          ->add('submit', SubmitType::class,[
             'label' => 'Filtrer',

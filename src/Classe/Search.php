@@ -3,6 +3,7 @@
  namespace App\Classe;
 
  use App\Entity\Categorie;
+ use App\Entity\SousCategorie;
 
  class Search{
     /**
@@ -14,4 +15,10 @@
      * @var Categorie[]
      */
     public $categories = [];
+
+     /**
+     * @var SousCategorie[]
+     */
+    public $sousCategories = [];
+    
  }
