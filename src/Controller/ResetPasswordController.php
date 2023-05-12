@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Classe\Mail;
+use App\Entity\Categorie;
 use App\Entity\ResetPassword;
 use App\Entity\Utilisateur;
 use App\Form\ResetPasswordType;
@@ -61,8 +62,13 @@ class ResetPasswordController extends AbstractController
         }
 
     }
+    $categorieslist=$this->entityManager->getRepository(Categorie::class)->findAll();
+
     
-        return $this->render('reset_password/index.html.twig');
+        return $this->render('reset_password/index.html.twig',[
+            'categorieslist' =>$categorieslist,
+
+        ]);
     }
     
     #[Route('/mot-de-passe-oublie/{token}', name: 'app_update_password')]
@@ -97,9 +103,12 @@ class ResetPasswordController extends AbstractController
         return $this->redirectToRoute('app_login');
 
        }
+       $categorieslist=$this->entityManager->getRepository(Categorie::class)->findAll();
 
        return $this->render('reset_password/update.html.twig', [
-        'form' => $form->createView()
+        'form' => $form->createView(),
+        'categorieslist' =>$categorieslist,
+
        ]);
 
      }

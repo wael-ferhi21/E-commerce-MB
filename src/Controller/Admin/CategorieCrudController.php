@@ -26,7 +26,6 @@ class CategorieCrudController extends AbstractCrudController
             ImageField::new('image','Image')
             ->setBasePath('upload\image\produit')
             ->setUploadDir('public\upload\image\produit')
-            ->setFormTypeOptions(['mapped' => false , 'required' => false])
             ->setSortable(false),
             
         ];

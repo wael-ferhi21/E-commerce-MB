@@ -6,12 +6,12 @@
     <meta name="description" content="vente en ligne">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v4.1.1">
-    <title>{% block title %} ClearShop {% endblock %} </title>
+    <title>{% block title %}ClearShop{% endblock %}</title>
 
     <!-- Bootstrap core CSS -->
-    <link href={{ asset('assets/css/bootstrap.min.css') }} rel="stylesheet">
-    <link rel="stylesheet" href={{ asset('assets/css/ClearShop.css') }}>
-    {% block javascript %}   
+    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('assets/css/ClearShop.css') }}">
+    {% block javascript %}
     {% endblock %}
     <style>
         .bd-placeholder-img {
@@ -28,32 +28,87 @@
                 font-size: 3.5rem;
             }
         }
-    </style>
+.promo-banner {
+  background-color: #f2f2f2;
+  padding: 10px;
+  text-align: center;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.promo-banner .promo-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.promo-banner h2 {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.promo-banner p {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.promo-banner .btn {
+  display: inline-block;
+  background-color: #333;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  font-size: 12px;
+}
+
+.promo-banner .btn:hover {
+  background-color: #555;
+}
+
+</style>
     <!-- Custom styles for this template -->
-    <link href={{ asset('assets/css/carousel.css') }} rel="stylesheet">
+    <link href="{{ asset('assets/css/carousel.css') }}" rel="stylesheet">
 </head>
 <body>
 <header>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="{{path('app_home') }}">ClearShop</a>
+        <a class="navbar-brand" href="{{ path('app_home') }}">ClearShop</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav mr-auto">
+             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="{{path('produits')}}">Nos Produits</a>
+                    <a class="nav-link" href="{{ path('produits') }}">Nos Produits</a>
                 </li>
-               <li class="nav-item active">
-                    <a class="nav-link" href="#">Qui-sommes-nous?</a>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ path('app_qui_sommes_nous') }}">Qui-sommes-nous?</a>
                 </li>
-                   <li class="nav-item active">
-                    <a class="nav-link" href="{{ path('app_contact')}}">Contact</a>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ path('app_contact') }}">Contact</a>
                 </li>
-               
-               
-               
+                <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="categoriesDropdown" role="button"
+           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Catégories
+        </a>
+        <div class="dropdown-menu" aria-labelledby="categoriesDropdown">
+            {% for categorie in categorieslist %}
+                <a class="dropdown-item" href="#">{{ categorie.catlib }}</a>
+            {% endfor %}
+        </div>
+    </li>
             </ul>
+            <form class="form-inline mt-2 mt-md-0 justify-content-center">
+                <input class="form-control mr-sm-2" type="text" placeholder="Votre recherche" aria-label="Rechercher">
+                <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Rechercher</button>
+            </form>
             <div class="navbar-item-custom">
                 {% if app.user %}
                 <a href="{{ path('app_account')}}">Mon compte<small>({{ app.user.prenom}}) </small></a> | <a href="{{ path('app_logout')}}">Deconnexion</a>
@@ -61,12 +116,20 @@
                 <a href="{{ path('app_login')}}">Connexion</a> | <a href="{{ path('app_register')}}">Inscription</a>
                 {% endif %}
             </div>
-             <a href="{{path('app_cart')}}">
-              <img src="{{asset('assets/img/panier.png')}}" class="cart-icon" alt="Mon panier">
-             </a>
-        
-            </div>
-        </nav>
+            <a href="{{path('app_cart')}}">
+                <img src="{{asset('assets/img/panier.png')}}" class="cart-icon" alt="Mon panier">
+            </a>
+        </div>
+    </nav>
+<div class="promo-banner">
+  <div class="promo-content">
+    <h2>Offre Exclusive</h2>
+    <p>Économisez jusqu'à 50% sur une sélection spéciale</p>
+    <a href="{{ path('produits') }}" class="btn btn-primary">Acheter maintenant</a>
+  </div>
+</div>
+
+
 </header>
 
 <main role="main">
@@ -88,7 +151,7 @@
                      <div class="carousel-caption text-left">
                         <h1> {{header.titre}} </h1> 
                         <p>{{header.content}}</p>
-                        <p><a class="btn btn-lg btn-info"  href="{{header.btnUrl}}" role="button">{{header.btnTitre}}</a></p><br/>
+                        <p><a class="btn btn-lg btn-dark"  href="{{header.btnUrl}}" role="button">{{header.btnTitre}}</a></p><br/>
                     </div>
                 </div>
             </div>
@@ -123,7 +186,7 @@
     <!-- FOOTER -->
     <footer class="footer-custom">
         <p>&copy; 2023-2024 ClearShop &middot; <br/>
-        <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+        <a href="#">Privacy Center</a> &middot; <a href="#">Manage Cookies</a> &middot; <a href="#">Terms & Conditions</a> &middot; <a href="#">Tunisia</a></p>
     </footer>
 </main>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

@@ -3,6 +3,7 @@
 {% block carousel %}{% endblock %}
 
 {% block content %}
+
 <h3>Nos meilleur ventes</h3>
 <p>Découvrez les articles les plus vendus</p>
 
@@ -12,50 +13,24 @@
                {% include 'product/single_produit.html.twig' %}  
            </div>
          {% endfor %}
-        </div><!-- /.row -->
+ </div><!-- /.row -->
 
 
         <!-- START THE FEATURETTES -->
 
         <hr class="featurette-divider">
-
-        <div class="row featurette">
+         <div class="row featurette">
             <div class="col-md-7 order-md-2">
-                <h2 class="featurette-heading">Chez ClearShop</br>
-                <span class="text-muted">Faites votre shopping en ligne en toute tranquillité</span></h2>
-                <p class="lead">Vous cherchez un site de shopping en ligne qui vous offre la meilleure sélection de produits ? Découvrez notre site e-commerce de marque blanche ! Nous avons des milliers de produits en stock et nous sommes toujours à l'affût des dernières tendances pour vous offrir le meilleur choix possible.</p>
+                <h2 class="featurette-heading">Profitez de nos promotions exceptionnelles</br>
+                <span class="text-muted">Des réductions allant jusqu'à 50%</span></h2>
+                <p class="lead">Notre site e-commerce propose une expérience de shopping en ligne unique, avec des promotions exclusives et des offres exceptionnelles qui vous permettent de réaliser des économies sur vos achats. Profitez de notre large sélection de produits de qualité et de notre service clientèle hors pair pour une expérience de shopping en ligne inoubliable.</p>
             </div>
             <div class="col-md-5 order-md-1">
-            <img src= "{{ asset('assets/img/pexels-nataliya-vaitkevich-6214476.jpg')}}" alt="" width="400" height="400">
-            </div>
-        </div>
-        <hr class="featurette-divider">
-
-        <div class="row featurette">
-            <div class="col-md-7">
-                <h2 class="featurette-heading">Notre site de vente en ligne <span class="text-muted"> devrait être une expérience agréable et pratique.</span></h2>
-                <p class="lead">"Bienvenue dans notre boutique en ligne, où vous pouvez trouver tout ce dont vous avez besoin pour votre style de vie. Notre sélection de produits haut de gamme, allant des vêtements et des accessoires aux articles pour la maison, est soigneusement choisie pour répondre à tous vos besoins. Avec des prix compétitifs et une livraison rapide, notre boutique en ligne est votre destination idéale pour faire du shopping de qualité sans quitter votre maison."</p>
-            </div>
-            <div class="col-md-5">
-            <img src= "{{ asset('assets/img/pexels-leeloo-thefirst-8938734.jpg')}}" alt="prix concurentielles ! " width="500" height="500">
-            </div>
-        </div>
-       <hr class="featurette-divider">
-
-        <div class="row featurette">
-            <div class="col-md-7">
-                <h2 class="featurette-heading">Profitez de nos promotions exceptionnelles </br> <span class="text-muted">  Des réductions allant jusqu'à 50%</span></h2>
-                <p class="lead">"Notre site e-commerce propose une expérience de shopping en ligne unique, avec des promotions exclusives et des offres exceptionnelles qui vous permettent de réaliser des économies sur vos achats. Profitez de notre large sélection de produits de qualité et de notre service clientèle hors pair pour une expérience de shopping en ligne inoubliable."</p>
-            </div>
-            <div class="col-md-5">
             <img src= "{{ asset('assets/img/pexels-karolina-grabowska-5632380.jpg')}}" alt="prix concurentielles ! " width="400" height="500">
             </div>
         </div>
-
-
-     
-
         <hr class="featurette-divider">
+
 
         </br>
 {% endblock %}

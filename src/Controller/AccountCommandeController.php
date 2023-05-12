@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Categorie;
 use App\Entity\Commande;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -33,8 +34,12 @@ class AccountCommandeController extends AbstractController
         if(!$commande || $commande->getCommandeclient() != $this->getUser()){
             return $this->redirectToRoute('app_account_commande');
         }
+        $categorieslist=$this->entityManager->getRepository(Categorie::class)->findAll();
+
         return $this->render('account/commande_show.html.twig', [
             'commande' => $commande,
+            'categorieslist' =>$categorieslist,
+
         ]);
     }
 }

@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Controller;
+
+use App\Entity\Categorie;
 use App\Form\ChangePasswordType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -46,9 +48,13 @@ class AccountPasswordController extends AbstractController
                 $form = $this->createForm(ResetPasswordType::class, $user);
             }
         }
+        $categorieslist=$this->entityManager->getRepository(Categorie::class)->findAll();
+
         return $this->render('account/password.html.twig',[
             'form'=>$form->createView(),
-            'notification' => $notification
+            'notification' => $notification,
+            'categorieslist' =>$categorieslist,
+
         ]);
     }
 }

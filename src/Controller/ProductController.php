@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Classe\Search;
+use App\Entity\Categorie;
 use App\Entity\Produit;
 use App\Form\SearchType;
 use App\Repository\CategorieRepository;
@@ -21,7 +22,10 @@ class ProductController extends AbstractController
     }
     #[Route('/Nos-produits', name: 'produits')]
     public function index(Request $request)
-    {
+    {      
+        
+        $categorieslist=$this->entityManager->getRepository(Categorie::class)->findAll();
+
         
         $search = new Search(); 
         $form= $this->createForm(SearchType::class, $search);
@@ -36,13 +40,14 @@ class ProductController extends AbstractController
 
         return $this->render('product/index.html.twig', [
             'produits' => $produits,
-            'form' => $form->createView()
-            
+            'form' => $form->createView(),
+            'categorieslist' =>$categorieslist,
         ]);
     }
     #[Route('/produit/{nom}', name: 'produit')]
     public function show($nom)
-    { 
+    {       
+        $categorieslist=$this->entityManager->getRepository(Categorie::class)->findAll();
         $produit=$this->entityManager->getRepository(Produit::class)->findOneByNom($nom);
         $produits = $this->entityManager->getRepository(Produit::class)->findByTopVente(1);
 
@@ -52,7 +57,9 @@ class ProductController extends AbstractController
         
         return $this->render('product/show.html.twig', [
             'produit' => $produit,
-            'produits' => $produits
+            'produits' => $produits,
+            'categorieslist' =>$categorieslist,
+
 
             
         ]);

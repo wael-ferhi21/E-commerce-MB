@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Classe\Cart;
 use App\Classe\Mail;
+use App\Entity\Categorie;
 use App\Entity\Commande;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -37,9 +38,12 @@ class CommandeSuccesController extends AbstractController
           
         }
 
+        $categorieslist=$this->entityManager->getRepository(Categorie::class)->findAll();
 
         return $this->render('commande_succes/index.html.twig',[
-            'commande' => $commande
+            'commande' => $commande,
+            'categorieslist' =>$categorieslist,
+
         ]);
     }
 }

@@ -16,7 +16,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Component\HttpFoundation\Response;
@@ -53,7 +52,7 @@ class ProduitCrudController extends AbstractCrudController
             NumberField::new('tauxremise','Remise'),
             TextField::new('alert_stock','Alert Stock'),
 
-            TextEditorField::new('proddescr','Description'),
+            TextField::new('proddescr','Description'),
             MoneyField::new('prix')->setCurrency('TND'),
            DateTimeField::new('updatedAt','Mis a jour le:'),
            DateTimeField::new('createdAt','Crée le :'),
@@ -62,9 +61,7 @@ class ProduitCrudController extends AbstractCrudController
            ImageField::new('image','Image')
            
            ->setBasePath('upload\image\produit')
-           ->setFormTypeOptions(['mapped' => false , 'required' => false])
            ->setUploadDir('public\upload\image\produit')
-           
            ->setSortable(false),
             
 

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Classe\Cart;
+use App\Entity\Categorie;
 use App\Entity\Commande;
 use App\Entity\CommandeDetails;
 use Doctrine\ORM\EntityManagerInterface;
@@ -35,11 +36,13 @@ class CommandeController extends AbstractController
             'user'=>$this->getUser()
         ]);
 
+        $categorieslist=$this->entityManager->getRepository(Categorie::class)->findAll();
 
 
         return $this->render('commande/index.html.twig',[
             'form'=>$form->createView(),
-            'cart'=>$cart->getFull()
+            'cart'=>$cart->getFull(),
+            'categorieslist' =>$categorieslist,
         ]);
     }
 
@@ -99,6 +102,7 @@ class CommandeController extends AbstractController
           }
      
           $this->entityManager->flush();
+          $categorieslist=$this->entityManager->getRepository(Categorie::class)->findAll();
 
 
           return $this->render('commande/add.html.twig',[
@@ -106,7 +110,9 @@ class CommandeController extends AbstractController
             'cart'=>$cart->getFull(),
             'carrier'=>$carriers,
             'adrlivraison' => $adrlivraison_content,
-            'reference' => $commande->getReference()
+            'reference' => $commande->getReference(),
+            'categorieslist' =>$categorieslist,
+
           
             
         ]);
@@ -114,6 +120,8 @@ class CommandeController extends AbstractController
     }
 
     return $this->redirectToRoute('app_cart');
+ 
+
      
     }
 

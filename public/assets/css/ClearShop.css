@@ -76,3 +76,32 @@ font-weight: bold;
     color: #778ca3;
     text-decoration: none;
 }
+.promo-banner {
+    background-color: #f1f1f1;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .promo-banner h2 {
+    font-size: 24px;
+    color: #333;
+  }
+  
+  .promo-banner p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 20px;
+  }
+  
+  .promo-banner .btn {
+    background-color: #ff5c63;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .promo-banner .btn:hover {
+    background-color: #ff3c42;
+  }

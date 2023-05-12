@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Classe\Cart;
+use App\Entity\Categorie;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,9 +18,12 @@ class CartController extends AbstractController
     public function index(Cart $cart)
     {
 
-    
+        $categorieslist=$this->entityManager->getRepository(Categorie::class)->findAll();
+
         return $this->render('cart/index.html.twig', [
             'cart'=>$cart->getFull(),
+            'categorieslist' =>$categorieslist,
+
            
         ]);
     }
@@ -28,7 +32,7 @@ class CartController extends AbstractController
     public function add(Cart $cart ,$id )
     {
         $cart->add($id); 
-        return $this->redirectToRoute('app_cart');
+        return $this->redirectToRoute('app_home');
     }
 
     #[Route('/cart/remove/{id}', name: 'app_cart_remove')]

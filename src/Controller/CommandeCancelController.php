@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Categorie;
 use App\Entity\Commande;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,9 +25,12 @@ class CommandeCancelController extends AbstractController
         if(!$commande || $commande->getUser() != $this->getUser()) {
            return $this->redirectToRoute('app_home');
         }
+        $categorieslist=$this->entityManager->getRepository(Categorie::class)->findAll();
 
         return $this->render('commande_cancel/index.html.twig',[
-            'commande' => $commande
+            'commande' => $commande,
+            'categorieslist' =>$categorieslist,
+
         ]);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Classe\Mail;
+use App\Entity\Categorie;
 use App\Entity\Utilisateur;
 use App\Form\RegistrationFormType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -57,11 +58,13 @@ class RegistrationController extends AbstractController
         
         }
        
+        $categorieslist=$this->entityManager->getRepository(Categorie::class)->findAll();
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
-            'notification'=>$notification
-            
+            'notification'=>$notification,
+            'categorieslist' =>$categorieslist,
+
         ]);
     }
 }

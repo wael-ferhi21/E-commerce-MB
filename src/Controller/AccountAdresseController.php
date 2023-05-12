@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Classe\Cart;
 use App\Entity\Adresse;
+use App\Entity\Categorie;
 use App\Form\AdresseType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,12 +21,18 @@ class AccountAdresseController extends AbstractController
     #[Route('/compte/adresse', name: 'app_adresse')]
     public function index(): Response
     {
-        return $this->render('account/adresse.html.twig',);
+        $categorieslist=$this->entityManager->getRepository(Categorie::class)->findAll();
+
+        return $this->render('account/adresse.html.twig',[
+            'categorieslist' =>$categorieslist,
+
+        ]);
     }
     
     #[Route('/compte/ajouter-une-adresse', name: 'app_add_adresse')]
     public function add(Cart $cart, Request $request): Response
     {
+        $categorieslist=$this->entityManager->getRepository(Categorie::class)->findAll();
         $adresse=new Adresse();
         $form=$this->createForm(AdresseType::class,$adresse);
         $form->handleRequest($request);
@@ -46,13 +53,16 @@ class AccountAdresseController extends AbstractController
 
         
         return $this->render('account/adresse_form.html.twig',[
-            'form'=> $form->createView()
+            'form'=> $form->createView(),
+            'categorieslist' =>$categorieslist,
+
         ]);
     }
     
     #[Route('/compte/ajouter-une-adresse/modifier/{id}', name: 'app_edit_adresse')]
     public function edit(Request $request, $id): Response
-    {
+    {        $categorieslist=$this->entityManager->getRepository(Categorie::class)->findAll();
+
         $adresse=$this->entityManager->getRepository(Adresse::class)->findOneById($id);
         if(!$adresse || $adresse->getAdresseclient() != $this->getUser()){
             return $this->redirectToRoute('app_adresse');
@@ -67,8 +77,11 @@ class AccountAdresseController extends AbstractController
 
 
         }
+
         return $this->render('account/adresse_form.html.twig',[
-            'form'=> $form->createView()
+            'form'=> $form->createView(),
+            'categorieslist' =>$categorieslist,
+
         ]);
     }
     #[Route('/compte/supprimer-une-adresse/modifier/{id}', name: 'app_delete_adresse')]

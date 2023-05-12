@@ -1,7 +1,7 @@
     
      <div class="produit-item text-center">
-        <a href="{{path('produit',{'nom' : produit.nom})}}"><img src="/upload/image/produit/{{produit.image}}" alt="{{produit.nom}}" class="img-fluid"></a>
+        <a href="{{path('produit',{'nom' : produit.nom})}}"><img src="/upload/image/produit/{{produit.image}}" alt="{{produit.nom}}" class="img-fluid" width="200" height="200"></a>
         <h5>{{produit.nom}} </h5>
-        <span class="produit-proddescr">{{produit.proddescr}} </span>
+        <span class="produit-proddescr"> {{ produit.proddescr }} </span>
         <span class="produit-prix"> {{(produit.prix / 100)|number_format('2', ',', '.') }} TND</span>
      </div>

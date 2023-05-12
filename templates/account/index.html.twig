@@ -4,27 +4,37 @@
 
 {% block content %}
 <h1>Mon compte</h1>
-Bienvenue {{app.user.nom}} dans votre compte <br/>
+<h2>Bienvenue {{ app.user.nom }} dans votre compte</h2>
+<br/>
+<p>Voici votre espace personnel où vous pouvez gérer vos informations.</p>
+
+<strong> Votre nom : </strong> {{ app.user.nom }} <br/>
+<strong> Votre prénom : </strong> {{ app.user.prenom }} <br/>
+<strong> Votre adresse mail : </strong> {{ app.user.email }}  <br/>
 <hr>
+
 <div class="row">
- <div class="col-md-4">
-  <div class="account-item text-center">
-  <img src= "{{ asset('assets/img/mot-de-passe (1).png')}}" alt="Modifier mon mot de passe" ><br/>
-  <a href="{{path('app_password')}}"> Modifier mon mot de passe </a><br/>
-  </div>
- </div>
- <div class="col-md-4">
-  <div class="account-item text-center">   
-  <img src= "{{ asset('assets/img/adresse.png')}}" alt="Gérer mes adresses" ><br/>
-<a href="{{path('app_adresse')}}"> Gérer mes adresses <br/>
-  </div>
- </div>
- <div class="col-md-4">
-  <div class="account-item text-center">
-   <img src= "{{ asset('assets/img/cargaison.png')}}" alt="Mes commandes" ><br/>
-<a href="{{path('app_account_commande')}}"> Mes commandes <br/>
-  </div>
- </div>
+    <div class="col-md-4">
+        <img src="{{ asset('assets/img/mot-de-passe (1).png') }}" alt="Modifier mon mot de passe">
+        <br/>
+        <a href="{{ path('app_password') }}">Modifier mon mot de passe</a>
+    </div>
+</div>
+<br/>
+<div class="row">
+    <div class="col-md-4">
+        <img src="{{ asset('assets/img/adresse.png') }}" alt="Gérer mes adresses">
+        <br/>
+        <a href="{{ path('app_adresse') }}">Gérer mes adresses</a>
+    </div>
+</div>
+<br/>
+<div class="row">
+    <div class="col-md-4">
+        <img src="{{ asset('assets/img/cargaison.png') }}" alt="Mes commandes">
+        <br/>
+        <a href="{{ path('app_account_commande') }}">Mes commandes</a>
+    </div>
 </div>
 
 <hr>
