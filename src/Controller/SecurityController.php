@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Repository\CategorieRepository;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -29,6 +31,32 @@ class SecurityController extends AbstractController
             'error' => $error,
             'categorieslist' => $categorieslist,
 
+        ]);
+    }
+    #[Route(path: '/api/login', name: 'api_login', methods: ['POST'])]
+    public function apiLogin(AuthenticationUtils $authenticationUtils, CategorieRepository $categorieRepository, JWTTokenManagerInterface $jwtManager): JsonResponse
+    {
+        if ($this->getUser()) {
+            return new JsonResponse(['message' => $authenticationUtils->getLastUsername()]);
+        }
+
+        $error = $authenticationUtils->getLastAuthenticationError();
+        $lastUsername = $authenticationUtils->getLastUsername();
+        $categoriesList = $categorieRepository->findAll();
+
+        // Replace this with your own logic to retrieve the user based on the username
+        $user = $this->getUser();
+
+        if ($this->getUser()) {
+            return new JsonResponse(['message' => 'Invalid credentials.']);
+        }
+
+        $token = $jwtManager->create($this->getUser());
+
+        return new JsonResponse([
+            'token' => $token,
+            'user' => $lastUsername,
+            'categoriesList' => $categoriesList,
         ]);
     }
 
